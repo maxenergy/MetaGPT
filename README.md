@@ -26,7 +26,9 @@
 </p>
 
 ## News
-🚀 Feb. 08, 2024: [v0.7.0](https://github.com/geekan/MetaGPT/releases/tag/v0.7.0) released, supporting assigning different LLMs to different Roles. We also introduced [Interpreter](https://github.com/geekan/MetaGPT/blob/main/examples/mi/README.md), a powerful agent capable of solving a wide range of real-world problems.
+🚀 Mar. 14, 2024: Our Data Interpreter paper is on [arxiv](https://arxiv.org/abs/2402.18679). Check the [example](https://docs.deepwisdom.ai/main/en/DataInterpreter/) and [code](https://github.com/geekan/MetaGPT/tree/main/examples/di)!
+
+🚀 Feb. 08, 2024: [v0.7.0](https://github.com/geekan/MetaGPT/releases/tag/v0.7.0) released, supporting assigning different LLMs to different Roles. We also introduced [Data Interpreter](https://github.com/geekan/MetaGPT/blob/main/examples/di/README.md), a powerful agent capable of solving a wide range of real-world problems.
 
 🚀 Jan. 16, 2024: Our paper [MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework
 ](https://arxiv.org/abs/2308.00352) accepted for oral presentation **(top 1.2%)** at ICLR 2024, **ranking #1** in the LLM-based Agent category.
@@ -97,6 +99,45 @@ print(repo)  # it will print the repo structure with files
 detail installation please refer to [cli_install](https://docs.deepwisdom.ai/main/en/guide/get_started/installation.html#install-stable-version)
  or [docker_install](https://docs.deepwisdom.ai/main/en/guide/get_started/installation.html#install-with-docker)
 
+### Docker installation
+<details><summary><strong>⏬ Step 1: Download metagpt image and prepare config2.yaml </strong><i>:: click to expand ::</i></summary>
+<div>
+
+```bash
+docker pull metagpt/metagpt:latest
+mkdir -p /opt/metagpt/{config,workspace}
+docker run --rm metagpt/metagpt:latest cat /app/metagpt/config/config2.yaml > /opt/metagpt/config/config2.yaml
+vim /opt/metagpt/config/config2.yaml # Change the config
+```
+
+</div>
+</details>
+
+<details><summary><strong>⏬ Step 2: Run metagpt container </strong><i>:: click to expand ::</i></summary>
+<div>
+
+```bash
+docker run --name metagpt -d \
+    --privileged \
+    -v /opt/metagpt/config/config2.yaml:/app/metagpt/config/config2.yaml \
+    -v /opt/metagpt/workspace:/app/metagpt/workspace \
+    metagpt/metagpt:latest
+```
+
+</div>
+</details>
+
+<details><summary><strong>⏬ Step 3: Use metagpt </strong><i>:: click to expand ::</i></summary>
+<div>
+
+```bash
+docker exec -it metagpt /bin/bash
+$ metagpt "Create a 2048 game"  # this will create a repo in ./workspace
+```
+
+</div>
+</details>
+
 ### QuickStart & Demo Video
 - Try it on [MetaGPT Huggingface Space](https://huggingface.co/spaces/deepwisdom/MetaGPT)
 - [Matthew Berman: How To Install MetaGPT - Build A Startup With One Prompt!!](https://youtu.be/uT75J_KG_aY)
@@ -138,7 +179,7 @@ We will respond to all questions within 2-3 business days.
 
 ## Citation
 
-For now, cite the [arXiv paper](https://arxiv.org/abs/2308.00352):
+If you use MetaGPT or Data Interpreter in a research paper, please cite our work as follows:
 
 ```bibtex
 @misc{hong2023metagpt,
@@ -149,4 +190,14 @@ For now, cite the [arXiv paper](https://arxiv.org/abs/2308.00352):
       archivePrefix={arXiv},
       primaryClass={cs.AI}
 }
+@misc{hong2024data,
+      title={Data Interpreter: An LLM Agent For Data Science}, 
+      author={Sirui Hong and Yizhang Lin and Bang Liu and Bangbang Liu and Binhao Wu and Danyang Li and Jiaqi Chen and Jiayi Zhang and Jinlin Wang and Li Zhang and Lingyao Zhang and Min Yang and Mingchen Zhuge and Taicheng Guo and Tuo Zhou and Wei Tao and Wenyi Wang and Xiangru Tang and Xiangtao Lu and Xiawu Zheng and Xinbing Liang and Yaying Fei and Yuheng Cheng and Zongze Xu and Chenglin Wu},
+      year={2024},
+      eprint={2402.18679},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI}
+}
+
 ```
+
